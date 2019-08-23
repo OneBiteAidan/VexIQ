@@ -13,20 +13,32 @@ void drivetrain (int left, int right)
 	motor[frontleft] = left;
 	motor[backleft] = left;
 }
+void rebound (int dir)
+{
+	drivetrain (-50,-50);
+	delay (300);
+	drivetrain (0,0);
+	delay (200);
+	drivetrain (dir * -30,dir * 30);
+	delay (300);
+}
 
 task main()
 {
 	while (true){
 		while ((SensorValue[rightbumper]) + (SensorValue[leftbumper]) <1)
+
 		{
 			drivetrain(50,50);
 			delay (10);
 		}
-		drivetrain (-50,-50);
-		delay (200);
-		drivetrain (0,0);
-		delay (200);
-		drivetrain (50,-50);
-		delay (200);
+		if (SensorValue[rightbumper] == 1)
+		{
+			rebound (1);
+
+			}else{
+
+			rebound (-1);
+		}
 	}
 }
